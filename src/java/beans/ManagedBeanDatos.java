@@ -126,7 +126,7 @@ public class ManagedBeanDatos implements Serializable {
         int resultado = 0;
         for (Alumno_Curso a : detalles) {
             if (a.getAlumno().getCodigo_alumno() == cod_alumno) {
-                resultado = a.getCurso().getNumero_creditos();
+                resultado = resultado + a.getCurso().getNumero_creditos();
             }
         }
         return resultado;
