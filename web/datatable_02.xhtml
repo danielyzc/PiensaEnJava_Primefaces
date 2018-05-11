@@ -10,7 +10,7 @@
 
         <h:form id="form">
 
-            <p:dataTable value="#{managedBeanDatos.detalles}" var="item">
+            <p:dataTable value="#{managedBeanDatos.detalles}" var="item" sortBy="#{item.alumno.nombres}">
                 <p:column headerText="CODIGO">
                     <h:outputText value="#{item.alumno.codigo_alumno}"/>
                 </p:column>
