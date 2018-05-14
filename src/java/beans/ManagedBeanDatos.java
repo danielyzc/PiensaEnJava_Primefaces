@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
@@ -31,14 +32,38 @@ public class ManagedBeanDatos implements Serializable {
     private List<Alumno> alumnos;
     private List<Alumno_Curso> detalles;
     private Alumno_Curso objeto_seleccionado;
+    private String firma_alumno = "";
 
     private String center_mapa = "-12.0459686,-77.0327614";
+    private Date fecha;
 
     public ManagedBeanDatos() {
         cursos = new LinkedList<>();
         alumnos = new LinkedList<>();
         detalles = new LinkedList<>();
         objeto_seleccionado = new Alumno_Curso();
+        fecha= new Date();
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    
+    public void limpiar_firma() {
+        firma_alumno = "";
+    }
+
+    public String getFirma_alumno() {
+        return firma_alumno;
+    }
+
+    public void setFirma_alumno(String firma_alumno) {
+        this.firma_alumno = firma_alumno;
     }
 
     public String getCenter_mapa() {
@@ -53,10 +78,10 @@ public class ManagedBeanDatos implements Serializable {
         DefaultMapModel simpleModel = new DefaultMapModel();
 
         //Coordenadas 
-        LatLng coord1 = new LatLng(-12.0450236,-77.0309484);
-        LatLng coord2 = new LatLng(-12.0461097,-77.0318492);
-        LatLng coord3 = new LatLng(-12.0455507,-77.0314336);
-        LatLng coord4 = new LatLng(-12.0452037,-77.0322574);
+        LatLng coord1 = new LatLng(-12.0450236, -77.0309484);
+        LatLng coord2 = new LatLng(-12.0461097, -77.0318492);
+        LatLng coord3 = new LatLng(-12.0455507, -77.0314336);
+        LatLng coord4 = new LatLng(-12.0452037, -77.0322574);
 
         //Marcadores
         simpleModel.addOverlay(new Marker(coord1, "Palacio Arzobispal de Lima"));
@@ -177,4 +202,15 @@ public class ManagedBeanDatos implements Serializable {
         objeto_seleccionado = obj;
     }
 
+    public void mostrar(int op) {
+        
+        if (op == 1) {
+            fecha= new Date();
+            RequestContext.getCurrentInstance().update("form:hora");
+            RequestContext.getCurrentInstance().execute("PF('notificacion').show();");
+        } else {
+            RequestContext context = RequestContext.getCurrentInstance();
+            context.execute("PF('notificacion').hide();");
+        }
+    }
 }

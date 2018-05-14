@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>WidgetVar 01</title>
+    </h:head>
+    <h:body>
+
+        <h:form id="form">
+
+            <p:notificationBar position="top" effect="slide" styleClass="top" widgetVar="notificacion">
+                <h:outputText value="PiensaEnJava" style="font-size:36px;" />
+                <h:outputText id="hora" value="#{managedBeanDatos.fecha}" style="margin-left: 10px; font-size:21px;" >
+                <f:convertDateTime pattern="dd/MM/yyyy hh:mm:ss"  />
+                </h:outputText>
+            </p:notificationBar>
+
+            <p:commandButton value="MOSTRAR" style="margin-top: 120px;" icon="ui-icon-arrow-1-s" actionListener="#{managedBeanDatos.mostrar(1)}"/>
+            <p:commandButton value="OCULTAR" style="margin-top: 120px;" icon="ui-icon-arrow-1-n" actionListener="#{managedBeanDatos.mostrar(0)}"/>
+
+        </h:form>
+    </h:body>
+</html>
+

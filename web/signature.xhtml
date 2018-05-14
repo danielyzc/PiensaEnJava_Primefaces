@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>signature</title>
+    </h:head>
+    <h:body>
+
+        <h:form id="form">
+
+            <p:growl>
+                <p:autoUpdate />
+            </p:growl>
+
+            <p:signature style="width:400px;height:200px" widgetVar="sig" value="#{managedBeanDatos.firma_alumno}" required="true" guideline="true"/>
+
+            <div style="margin:20px 0">
+                <p:commandButton value="Submit" icon="ui-icon-check" update=":form:output"/>
+                <p:commandButton value="Clear" icon="ui-icon-close"  actionListener="#{managedBeanDatos.limpiar_firma()}" oncomplete="PF('sig').clear()" update=":form"/>
+            </div>
+
+            <p:outputPanel id="output">
+                <h:outputText rendered="#{not empty managedBeanDatos.firma_alumno}" style="font-size:24px;display:block" value="FIRMA" />
+                <p:signature style="width:400px;height:200px;" value="#{managedBeanDatos.firma_alumno}" readonly="true"
+                             rendered="#{not empty managedBeanDatos.firma_alumno}" backgroundColor="#eaeaea" color="#03a9f4"/>
+            </p:outputPanel>
+        </h:form>
+    </h:body>
+</html>
+
