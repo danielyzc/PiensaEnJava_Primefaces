@@ -10,10 +10,19 @@ package clases;
  * @author root
  */
 public class Curso {
+    private int codigo;
     private String nombre;
     private int numero_creditos;
 
     public Curso() {
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
     public String getNombre() {

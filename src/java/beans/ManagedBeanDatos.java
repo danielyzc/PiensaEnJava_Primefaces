@@ -11,6 +11,7 @@ import clases.Curso;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,16 +39,26 @@ public class ManagedBeanDatos implements Serializable {
 
     private String center_mapa = "-12.0459686,-77.0327614";
     private Date fecha;
-    private String usuario="";
-    private String clave ="";
-    private Boolean opcion=false;
+    private String usuario = "";
+    private String clave = "";
+    private Boolean opcion = false;
+    private Curso curso_seleccionado;
 
     public ManagedBeanDatos() {
         cursos = new LinkedList<>();
         alumnos = new LinkedList<>();
         detalles = new LinkedList<>();
         objeto_seleccionado = new Alumno_Curso();
-        fecha= new Date();
+        fecha = new Date();
+        curso_seleccionado = new Curso();
+    }
+
+    public Curso getCurso_seleccionado() {
+        return curso_seleccionado;
+    }
+
+    public void setCurso_seleccionado(Curso curso_seleccionado) {
+        this.curso_seleccionado = curso_seleccionado;
     }
 
     public Boolean getOpcion() {
@@ -58,7 +69,6 @@ public class ManagedBeanDatos implements Serializable {
         this.opcion = opcion;
     }
 
-    
     public String getUsuario() {
         return usuario;
     }
@@ -75,7 +85,6 @@ public class ManagedBeanDatos implements Serializable {
         this.clave = clave;
     }
 
-    
     public Date getFecha() {
         return fecha;
     }
@@ -84,7 +93,6 @@ public class ManagedBeanDatos implements Serializable {
         this.fecha = fecha;
     }
 
-    
     public void limpiar_firma() {
         firma_alumno = "";
     }
@@ -137,20 +145,44 @@ public class ManagedBeanDatos implements Serializable {
         detalles = new LinkedList<>();
 
         Curso curso01 = new Curso();
+        curso01.setCodigo(1);
         curso01.setNombre("Fundamentos de la Programacion");
         curso01.setNumero_creditos(5);
 
         Curso curso02 = new Curso();
+        curso02.setCodigo(2);
         curso02.setNombre("Curso Primefaces");
         curso02.setNumero_creditos(3);
 
         Curso curso03 = new Curso();
+        curso03.setCodigo(3);
         curso03.setNombre("Curso Base Datos MYSQL");
         curso03.setNumero_creditos(4);
+        
+        Curso curso04 = new Curso();
+        curso04.setCodigo(4);
+        curso04.setNombre("Curso Linux");
+        curso04.setNumero_creditos(7);
+        Curso curso05 = new Curso();
+        curso05.setCodigo(5);
+        curso05.setNombre("Administracion Windows");
+        curso05.setNumero_creditos(5);
+        Curso curso06 = new Curso();
+        curso06.setCodigo(6);
+        curso06.setNombre("Optimizacion de servidores");
+        curso06.setNumero_creditos(4);
+        Curso curso07 = new Curso();
+        curso07.setCodigo(7);
+        curso07.setNombre("Compiladores");
+        curso07.setNumero_creditos(4);
 
         cursos.add(curso01);
         cursos.add(curso02);
         cursos.add(curso03);
+        cursos.add(curso04);
+        cursos.add(curso05);
+        cursos.add(curso06);
+        cursos.add(curso07);
 
         Alumno alumno01 = new Alumno();
         alumno01.setNombres("DANIEL");
@@ -234,9 +266,9 @@ public class ManagedBeanDatos implements Serializable {
     }
 
     public void mostrar(int op) {
-        
+
         if (op == 1) {
-            fecha= new Date();
+            fecha = new Date();
             RequestContext.getCurrentInstance().update("form:hora");
             RequestContext.getCurrentInstance().execute("PF('notificacion').show();");
         } else {
@@ -244,8 +276,45 @@ public class ManagedBeanDatos implements Serializable {
             context.execute("PF('notificacion').hide();");
         }
     }
-     public void agregarMensaje() {
+
+    public void agregarMensaje() {
         String summary = opcion ? "Activo" : "Desactivo";
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
+    }
+
+    public Curso obtenerCurso_codigo(int id_curso) {
+        // Aqui se debe implementar una llamda a base de datos.
+       Curso curso_ = null;
+        for (Curso c : cursos) {
+            if (c.getCodigo() == id_curso) {
+                curso_ = c;
+            }
+        }
+        return curso_;
+    }
+
+    public List<Curso> autocompletar_cursos(String query) {
+        List<Curso> lista_resultado = new ArrayList<Curso>();
+        for (Curso c : cursos) {
+            if (c.getNombre().toLowerCase().contains(query.toLowerCase())) {
+                lista_resultado.add(c);
+            }
+
+        }
+
+        return lista_resultado;
+    }
+
+    public List<Alumno_Curso> detalles_Filtrados(Curso c) {
+        List<Alumno_Curso> resultado_ = new LinkedList<>();
+        if (c != null) {
+            for (Alumno_Curso ac : detalles) {
+                if (ac.getCurso().getNombre().equalsIgnoreCase(c.getNombre())) {
+                    resultado_.add(ac);
+                }
+            }
+        }
+
+        return resultado_;
     }
 }
