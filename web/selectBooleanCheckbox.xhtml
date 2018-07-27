@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>selectBooleanCheckbox</title>
+    </h:head>
+    <h:body>
+
+        <h:form id="form">
+
+            <p:growl id="msg" />
+
+            <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                <p:outputLabel for="@next" value="ACTIVAR SElECCION " />
+                <p:selectBooleanCheckbox value="#{managedBeanDatos.opcion}">
+                    <p:ajax update="msg" listener="#{managedBeanDatos.agregarMensaje()}" />
+                </p:selectBooleanCheckbox>
+            </h:panelGrid>
+
+            <p:commandButton value="VER VALORES" icon="ui-icon-check" update="display" oncomplete="PF('dlg').show()" />
+
+            <p:dialog header="VALORES" modal="true" resizable="false" showEffect="fade" widgetVar="dlg">
+                <h:panelGrid columns="1" id="display">
+                    <h:outputText value="OPCION ES: #{managedBeanDatos.opcion}" />
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+    </h:body>
+</html>
+
