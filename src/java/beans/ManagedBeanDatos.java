@@ -14,11 +14,13 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import org.primefaces.context.RequestContext;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -36,6 +38,9 @@ public class ManagedBeanDatos implements Serializable {
 
     private String center_mapa = "-12.0459686,-77.0327614";
     private Date fecha;
+    private String usuario="";
+    private String clave ="";
+    private Boolean opcion=false;
 
     public ManagedBeanDatos() {
         cursos = new LinkedList<>();
@@ -45,6 +50,32 @@ public class ManagedBeanDatos implements Serializable {
         fecha= new Date();
     }
 
+    public Boolean getOpcion() {
+        return opcion;
+    }
+
+    public void setOpcion(Boolean opcion) {
+        this.opcion = opcion;
+    }
+
+    
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    
     public Date getFecha() {
         return fecha;
     }
@@ -212,5 +243,9 @@ public class ManagedBeanDatos implements Serializable {
             RequestContext context = RequestContext.getCurrentInstance();
             context.execute("PF('notificacion').hide();");
         }
+    }
+     public void agregarMensaje() {
+        String summary = opcion ? "Activo" : "Desactivo";
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(summary));
     }
 }
