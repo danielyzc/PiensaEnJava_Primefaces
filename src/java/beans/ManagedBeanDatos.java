@@ -11,6 +11,7 @@ import clases.Curso;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -22,6 +23,7 @@ import org.primefaces.model.map.LatLng;
 import org.primefaces.model.map.MapModel;
 import org.primefaces.model.map.Marker;
 import javax.faces.context.FacesContext;
+import org.primefaces.event.SelectEvent;
 
 /**
  *
@@ -43,6 +45,7 @@ public class ManagedBeanDatos implements Serializable {
     private String clave = "";
     private Boolean opcion = false;
     private Curso curso_seleccionado;
+    private String f_seleccionada = "";
 
     public ManagedBeanDatos() {
         cursos = new LinkedList<>();
@@ -51,6 +54,14 @@ public class ManagedBeanDatos implements Serializable {
         objeto_seleccionado = new Alumno_Curso();
         fecha = new Date();
         curso_seleccionado = new Curso();
+    }
+
+    public String getF_seleccionada() {
+        return f_seleccionada;
+    }
+
+    public void setF_seleccionada(String f_seleccionada) {
+        this.f_seleccionada = f_seleccionada;
     }
 
     public Curso getCurso_seleccionado() {
@@ -158,7 +169,7 @@ public class ManagedBeanDatos implements Serializable {
         curso03.setCodigo(3);
         curso03.setNombre("Curso Base Datos MYSQL");
         curso03.setNumero_creditos(4);
-        
+
         Curso curso04 = new Curso();
         curso04.setCodigo(4);
         curso04.setNombre("Curso Linux");
@@ -284,7 +295,7 @@ public class ManagedBeanDatos implements Serializable {
 
     public Curso obtenerCurso_codigo(int id_curso) {
         // Aqui se debe implementar una llamda a base de datos.
-       Curso curso_ = null;
+        Curso curso_ = null;
         for (Curso c : cursos) {
             if (c.getCodigo() == id_curso) {
                 curso_ = c;
@@ -316,5 +327,12 @@ public class ManagedBeanDatos implements Serializable {
         }
 
         return resultado_;
+    }
+
+    public void actualizar_fecha(SelectEvent event) {
+        SimpleDateFormat fecha1 = new SimpleDateFormat("EEEEE dd MMMMM yyyy");
+        StringBuilder cadena_fecha1_11 = new StringBuilder(fecha1.format(event.getObject()));
+        f_seleccionada = cadena_fecha1_11.toString();
+        
     }
 }
